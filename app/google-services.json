@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "778754848719",
+    "project_id": "sistema-de-reciclajev1",
+    "storage_bucket": "sistema-de-reciclajev1.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:778754848719:android:96f6c75a352997cea684ba",
+        "android_client_info": {
+          "package_name": "com.example.ecovision"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQ4qBM3KHU2nPiDQWCXLjuDaJuZXBT2lc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
