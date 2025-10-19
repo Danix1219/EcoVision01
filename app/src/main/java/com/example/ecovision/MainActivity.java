@@ -1,6 +1,7 @@
 package com.example.ecovision;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
@@ -40,9 +41,10 @@ public class MainActivity extends AppCompatActivity {
     private DataType inputDataType;
     private TextToSpeech textToSpeech;
     private TextView infoTextView;
+    private TextView scoreTextView;
+    private int score = 0;
 
-
-
+    @SuppressLint("MissingInflatedId")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageView);
         resultTextView = findViewById(R.id.resultTextView);
         infoTextView = findViewById(R.id.infoTextView);
+        scoreTextView = findViewById(R.id.scoreTextView);
         infoTextView.setVisibility(View.GONE); // Oculta el infoTextView al iniciar
         Button captureButton = findViewById(R.id.captureButton);
 
@@ -99,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
                         REQUEST_CAMERA_PERMISSION);
             }
         });
+
+        // Inicializar score
+        updateScore();
     }
 
     private void openCamera() {
@@ -208,22 +214,28 @@ public class MainActivity extends AppCompatActivity {
             case "Plástico":
                 message = "Depositar en el contenedor amarillo";
                 info = "El plástico es un material reciclable usado en envases y botellas. Se recomienda limpiarlo antes de desecharlo.";
+                incrementScore();
                 break;
             case "Papel":
                 message = "Depositar en el Contenedor azul";
                 info = "El papel se recicla para fabricar nuevos productos como libretas y cartón. Evita mezclarlo con materiales húmedos.";
+                incrementScore();
                 break;
             case "Vidrio":
                 message = "Depositar en el Contenedor verde";
                 info = "El vidrio puede reciclarse muchas veces sin perder calidad. Se recomienda enjuagar antes de desechar.";
+                incrementScore();
                 break;
             case "Metal":
                 message = "Depositar en el Contenedor gris";
                 info = "El metal, como las latas de aluminio, se recicla para fabricar nuevos envases y productos metálicos.";
+                incrementScore();
                 break;
+
             case "Carton":
                 message = "Depositar en el Contenedor azul";
                 info = "El cartón reciclado se usa para crear empaques y cajas. Asegúrate de que no esté contaminado con grasa o líquidos.";
+                incrementScore();
                 break;
             case "Basura":
                 message = "Depositar en el Contenedor gris 🗑";
@@ -232,12 +244,24 @@ public class MainActivity extends AppCompatActivity {
             default:
                 message = "No reciclable ❌";
                 info = "Este objeto no se puede reciclar. Intenta reutilizarlo o reducir su uso en el futuro.";
+                break;
         }
 
         resultTextView.setText(message);
         infoTextView.setVisibility(View.VISIBLE);
         infoTextView.setText(info);
         speakMessage(message + ". " + info);
+    }
+
+    private void incrementScore() {
+        score += 10; // Aumentar 10 puntos por reciclaje correcto
+        updateScore();
+    }
+
+    private void updateScore() {
+        if (scoreTextView != null) {
+            scoreTextView.setText("Puntaje: " + score);
+        }
     }
 
     private void speakMessage(String message) {
